@@ -1,9 +1,16 @@
-//  Step-1 :- importing and initializing express and port
+//  Step-1 :- importing and initializing express and express-ejs-layouts and port
 const express = require("express");
 const port = 8000;
+const expressLayouts = require("express-ejs-layouts");
 
 // Step-2 :- Starting or firingup our express server...
 const app = express();
+
+// Step-7 :- setting up static files in our app...
+app.use(express.static("./assets"));
+
+// Step-6 :- Setting up express-ejs-layouts for rendering layouts...
+app.use(expressLayouts);
 
 // Step-4 :- setting up the express router...
 app.use("/", require("./routes"));
