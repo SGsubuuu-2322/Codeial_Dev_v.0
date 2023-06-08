@@ -12,6 +12,10 @@ app.use(express.static("./assets"));
 // Step-6 :- Setting up express-ejs-layouts for rendering layouts...
 app.use(expressLayouts);
 
+// Extracts styles and scripts from subpages and putting into the layout page...
+app.set("layout extractStyles", true);
+app.set("layout extractSripts", true);
+
 // Step-4 :- setting up the express router...
 app.use("/", require("./routes"));
 
