@@ -1,11 +1,18 @@
-//  Step-1 :- importing and initializing express and express-ejs-layouts and port
+//  Step-1 :- importing and initializing express and express-ejs-layouts and cookie-parser and port
 const express = require("express");
 const port = 8000;
 const expressLayouts = require("express-ejs-layouts");
 const db = require("./configs/mongoose");
+const cookieParser = require("cookie-parser");
 
 // Step-2 :- Starting or firingup our express server...
 const app = express();
+
+// Using urlencoded middlewares for reading post request to the server...
+app.use(express.urlencoded());
+
+// Using cookieParser middlewares for working with cookies...
+app.use(cookieParser());
 
 // Step-7 :- setting up static files in our app...
 app.use(express.static("./assets"));
