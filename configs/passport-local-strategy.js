@@ -50,3 +50,6 @@ passport.deserializeUser(function (id, done) {
     return done(null, user);
   });
 });
+
+// Exporting passport for further using in other files...
+module.exports = passport;
