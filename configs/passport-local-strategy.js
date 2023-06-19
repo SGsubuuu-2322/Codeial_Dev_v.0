@@ -9,7 +9,7 @@ const User = require("../models/user");
 passport.use(
   new LocalStrategy(
     {
-      usernameField: "email,",
+      usernameField: "email",
     },
     function (email, password, done) {
       // Finding the user and establish the identity...
@@ -50,6 +50,25 @@ passport.deserializeUser(function (id, done) {
     return done(null, user);
   });
 });
+
+// Check if the user is authenticated or not...
+passport.checkAuthentication = function (req, res, next) {
+  // Check if the user is signed-in then pass on the req to the next function(controller's action)...
+  if (req.isAuthenticated()) {
+    return next();
+  } else {
+    // If he/she isn't signned-in redirect him back with an error message...
+    return res.redirect("/users/sign-in");
+  }
+};
+
+passport.setAuthenticatedUser = function (req, res, next) {
+  if (req.isAuthenticated()) {
+    // req.user contains current signed-in user details from session cookie and we're just sending this to the res locals for the views...
+    res.locals.user = req.user;
+  }
+  next();
+};
 
 // Exporting passport for further using in other files...
 module.exports = passport;

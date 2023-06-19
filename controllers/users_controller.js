@@ -14,6 +14,10 @@ module.exports.setting = (req, res) => {
 
 // Render the signin page...
 module.exports.signIn = (req, res) => {
+  if (req.isAuthenticated()) {
+    return res.redirect("/users/profile");
+  }
+
   return res.render("signIn", {
     title: "users_signIn_page",
   });
@@ -21,6 +25,10 @@ module.exports.signIn = (req, res) => {
 
 // Render the signup page...
 module.exports.signUp = (req, res) => {
+  if (req.isAuthenticated()) {
+    return res.redirect("/users/profile");
+  }
+
   return res.render("signUp", {
     title: "users_signUp_page",
   });
@@ -55,5 +63,15 @@ module.exports.create = (req, res) => {
 
 // Get the sign-in ...
 module.exports.createSession = (req, res) => {
-  // ToDo Later...
+  return res.redirect("/");
+};
+
+module.exports.destroySession = (req, res) => {
+  req.logout(function (err) {
+    if (err) {
+      console.log(err);
+    } else {
+      return res.redirect("/");
+    }
+  });
 };
