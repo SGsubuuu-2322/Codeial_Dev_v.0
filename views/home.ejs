@@ -1,3 +1,15 @@
+<h1>Hello and welcome to yours and ours social media app codeial...</h1>
+<h3>And this is your <%= title %> page...</h3>
 
-    <h1>Hello and welcome to yours and ours social media app codeial...</h1>
-    <h3>And this is your <%= title %> page...</h3>
+<%if(locals.user){%>
+<h3>Feed-Post</h3>
+<form action="/posts/create" method="post">
+  <textarea
+    name="content"
+    cols="30"
+    rows="5"
+    placeholder="Type here..."
+  ></textarea>
+  <input type="submit" value="Post" />
+</form>
+<%}%>
