@@ -1,1 +1,14 @@
-<footer>This is your footer_partial</footer>
+<!-- <footer>This is your footer_partial</footer> -->
+
+<footer>
+  <p>@Coding_Ninjas. All rights reserved...</p>
+  <ul>
+    <% if(locals.user){%>
+    <li><a href="/">home</a></li>
+    <li><a href="/users/sign-out">Sign_Out</a></li>
+    <%}else{%>
+    <li><a href="/">home</a></li>
+    <li><a href="/users/sign-up">Sign-Up</a></li>
+    <%}%>
+  </ul>
+</footer>

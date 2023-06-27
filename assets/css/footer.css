@@ -1,0 +1,26 @@
+footer {
+  width: inherit;
+  height: 10vh;
+  padding-left: 0.2em;
+  border: 4px solid rgb(255, 185, 185);
+  background-color: rgb(0, 255, 170);
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  color: black;
+}
+footer p {
+  font-size: 1.1em;
+}
+footer ul li {
+  list-style: none;
+}
+footer ul li a {
+  text-decoration: none;
+}
+footer ul li a:hover {
+  color: whitesmoke;
+  text-decoration: underline;
+}
+
+/*# sourceMappingURL=footer.css.map */
