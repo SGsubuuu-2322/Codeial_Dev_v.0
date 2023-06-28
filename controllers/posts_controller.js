@@ -12,7 +12,7 @@ module.exports.createPosts = (req, res) => {
         console.log("There is some issue in creating post...");
       }
 
-      console.log("Great!!! you'hv created a post successfully...");
+      console.log("Great!!! you'hv successfully created a post...");
       return res.redirect("back");
     }
   );
