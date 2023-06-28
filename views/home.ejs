@@ -9,6 +9,7 @@
     cols="30"
     rows="5"
     placeholder="Type here..."
+    required
   ></textarea>
   <input type="submit" value="Post" />
 </form>
@@ -21,7 +22,7 @@
       <p>
         <%= post.content %>
         <br />
-        <small>@<%= post.user.name %></small>
+        <small>-<%= post.user.name %></small>
       </p>
 
       <div id="posts-comments">
@@ -31,11 +32,26 @@
             type="text"
             name="content"
             placeholder="Type here to add a comment..."
+            required
           />
           <input type="hidden" name="post" value="<%= post._id%>" />
           <input type="submit" value="Add Comment" />
         </form>
         <%}%>
+
+        <div class="posts-comments-list">
+          <ul id="posts-comments-<%= post._id %>">
+            <% for(comment of post.comments){ %>
+            <li>
+              <p>
+                <%= comment.content %>
+                <br />
+                <small>@<%= comment.user.name %></small>
+              </p>
+            </li>
+            <% } %>
+          </ul>
+        </div>
       </div>
     </li>
     <%}%>

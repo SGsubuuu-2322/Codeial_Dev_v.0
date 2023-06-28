@@ -9,7 +9,7 @@ body::-webkit-scrollbar {
   display: none;
 }
 body #layout-main {
-  height: 100vh;
+  height: 100%;
 }
 
 /*# sourceMappingURL=layout.css.map */
