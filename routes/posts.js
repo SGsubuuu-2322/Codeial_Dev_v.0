@@ -9,4 +9,10 @@ router.post(
   passport.checkAuthentication,
   postController.createPosts
 );
+
+router.get(
+  "/destroy/:id",
+  passport.checkAuthentication,
+  postController.destroyPosts
+);
 module.exports = router;
