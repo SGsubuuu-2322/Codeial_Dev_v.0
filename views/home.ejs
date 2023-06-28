@@ -15,8 +15,15 @@
 </form>
 <%}%>
 
-<div id="posts-list-container">
+<section id="posts-list-container">
   <ul>
     <%for(post of posts){%> <%- include('_posts') -%> <%}%>
   </ul>
-</div>
+</section>
+
+<section id="user-friends">
+  <h3>Friends</h3>
+  <% for(u of all_users) {%>
+  <p><a href="/users/profile/<%= u.id%>"><%= u.name %></a></p>
+  <% } %>
+</section>

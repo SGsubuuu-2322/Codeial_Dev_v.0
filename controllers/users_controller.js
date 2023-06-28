@@ -2,8 +2,18 @@
 const User = require("../models/user");
 
 module.exports.profile = (req, res) => {
-  return res.render("user_file", {
-    title: "user_profile_page",
+  User.findById(req.params.id, function (err, user) {
+    if (err) {
+      console.log(
+        "There's some technical issues in fetching the user from db..."
+      );
+      return res.redirect("back");
+    } else if (user) {
+      return res.render("user_file", {
+        title: "user_profile_page",
+        profile_user: user,
+      });
+    }
   });
 };
 module.exports.setting = (req, res) => {
