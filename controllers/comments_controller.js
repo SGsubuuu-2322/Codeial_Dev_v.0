@@ -31,3 +31,31 @@ module.exports.createComments = (req, res) => {
     }
   });
 };
+
+module.exports.destroyComments = (req, res) => {
+  Comment.findById(req.params.id, function (err, comment) {
+    if (err) {
+      console.log("There's some technical issues in finding the comment...");
+      return res.redirect("back");
+    } else if (comment.user == req.user.id) {
+      let postId = comment.Post;
+      comment.remove();
+
+      Post.findByIdAndUpdate(
+        postId,
+        { $pull: { comments: req.params.id } },
+        function (err) {
+          if (err) {
+            console.log(
+              "There's some technical issue in deleting the comment-id in comments in post..."
+            );
+            return res.redirect("back");
+          }
+          return res.redirect("back");
+        }
+      );
+    } else {
+      return res.redirect("back");
+    }
+  });
+};
