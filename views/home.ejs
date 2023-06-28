@@ -1,30 +1,36 @@
-<h1>Hello and welcome to yours and ours social media app codeial...</h1>
-<h3>And this is your <%= title %> page...</h3>
+<link rel="stylesheet" type="text/css" href="/css/home.css" />
 
-<%if(locals.user){%>
-<h3>Feed-Post</h3>
-<form action="/posts/create" method="post">
-  <textarea
-    name="content"
-    cols="30"
-    rows="5"
-    placeholder="Type here..."
-    required
-  ></textarea>
-  <input type="submit" value="Post" />
-</form>
-<%}%>
+<div class="home-container">
+  <section id="feed-posts">
+    <h1>Hello and welcome to codeial ...</h1>
+    <h3>Socialize through codesss...</h3>
 
-<section id="posts-list-container">
-  <h3>Posts-Feeds</h3>
-  <ul>
-    <%for(post of posts){%> <%- include('_posts') -%> <%}%>
-  </ul>
-</section>
+    <%if(locals.user){%>
+    <h3>Feed-Post</h3>
+    <form action="/posts/create" method="post">
+      <textarea
+        name="content"
+        cols="30"
+        rows="5"
+        placeholder="Type here..."
+        required
+      ></textarea>
+      <input type="submit" value="Post" />
+    </form>
+    <%}%>
 
-<section id="user-friends">
-  <h3>Friends</h3>
-  <% for(u of all_users) {%>
-  <p><a href="/users/profile/<%= u.id%>"><%= u.name %></a></p>
-  <% } %>
-</section>
+    <div id="posts-list-container">
+      <h3>Posts-Feeds</h3>
+      <ul>
+        <%for(post of posts){%> <%- include('_posts') -%> <%}%>
+      </ul>
+    </div>
+  </section>
+
+  <section id="user-friends">
+    <h3>Friends</h3>
+    <% for(u of all_users) {%>
+    <p><a href="/users/profile/<%= u.id%>"><%= u.name %></a></p>
+    <% } %>
+  </section>
+</div>
