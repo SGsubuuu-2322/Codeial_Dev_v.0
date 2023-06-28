@@ -16,6 +16,25 @@ module.exports.profile = (req, res) => {
     }
   });
 };
+
+module.exports.update = (req, res) => {
+  if (req.user.id == req.params.id) {
+    User.findByIdAndUpdate(req.params.id, req.body, function (err, user) {
+      if (err) {
+        console.log(
+          "There's some technical issues in updating the user details in db..."
+        );
+        return res.redirect("back");
+      } else if (user) {
+        console.log("Great!!! your details has been successfully updated...");
+        return res.redirect("back");
+      }
+    });
+  } else {
+    return res.status(401).send("You're unauthorized to do this action...");
+  }
+};
+
 module.exports.setting = (req, res) => {
   return res.render("user_file", {
     title: "users_setting_page",
