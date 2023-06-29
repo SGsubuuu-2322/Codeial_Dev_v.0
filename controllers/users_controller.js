@@ -1,37 +1,30 @@
 // importing model for accessing the database...
 const User = require("../models/user");
 
-module.exports.profile = (req, res) => {
-  User.findById(req.params.id, function (err, user) {
-    if (err) {
-      console.log(
-        "There's some technical issues in fetching the user from db..."
-      );
-      return res.redirect("back");
-    } else if (user) {
-      return res.render("user_file", {
-        title: "user_profile_page",
-        profile_user: user,
-      });
-    }
-  });
+module.exports.profile = async (req, res) => {
+  try {
+    let user = await User.findById(req.params.id);
+    return res.render("user_file", {
+      title: "user_profile_page",
+      profile_user: user,
+    });
+  } catch (err) {
+    console.log("Error : ", err);
+  }
 };
 
-module.exports.update = (req, res) => {
-  if (req.user.id == req.params.id) {
-    User.findByIdAndUpdate(req.params.id, req.body, function (err, user) {
-      if (err) {
-        console.log(
-          "There's some technical issues in updating the user details in db..."
-        );
-        return res.redirect("back");
-      } else if (user) {
-        console.log("Great!!! your details has been successfully updated...");
-        return res.redirect("back");
-      }
-    });
-  } else {
-    return res.status(401).send("You're unauthorized to do this action...");
+module.exports.update = async (req, res) => {
+  try {
+    if (req.user.id == req.params.id) {
+      let user = await User.findByIdAndUpdate(req.params.id, req.body);
+
+      console.log("Great!!! your details has been successfully updated...");
+      return res.redirect("back");
+    } else {
+      return res.status(401).send("You're unauthorized to do this action...");
+    }
+  } catch (err) {
+    console.log("Error", err);
   }
 };
 
@@ -64,30 +57,26 @@ module.exports.signUp = (req, res) => {
 };
 
 // Get the sign-up data...
-module.exports.create = (req, res) => {
-  if (req.body.password != req.body.confirm_password) {
-    return res.redirect("back");
-  }
-
-  User.findOne({ email: req.body.email }, function (err, user) {
-    if (err) {
-      console.log("Error in signing_up the user...");
-      return;
+module.exports.create = async (req, res) => {
+  try {
+    if (req.body.password != req.body.confirm_password) {
+      return res.redirect("back");
     }
+
+    let user = await User.findOne({ email: req.body.email });
+
     if (!user) {
-      User.create(req.body, function (err, user) {
-        if (err) {
-          console.log("Error in creating the user while signing_up...");
-          return;
-        }
-        console.log("The user has been successfully signed_up in app...");
-        return res.redirect("/users/sign-in");
-      });
+      await User.create(req.body);
+
+      console.log("The user has been successfully signed_up in app...");
+      return res.redirect("/users/sign-in");
     } else {
       console.log("This emailID is already exists try with new one...");
       return res.redirect("back");
     }
-  });
+  } catch (err) {
+    Console.log("Error : ", err);
+  }
 };
 
 // Get the sign-in ...
