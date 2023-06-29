@@ -81,6 +81,7 @@ module.exports.create = async (req, res) => {
 
 // Get the sign-in ...
 module.exports.createSession = (req, res) => {
+  req.flash("success", "Signed_In Successfully...");
   return res.redirect("/");
 };
 
@@ -89,6 +90,7 @@ module.exports.destroySession = (req, res) => {
     if (err) {
       console.log(err);
     } else {
+      req.flash("success", "Signed_Out Successfully...");
       return res.redirect("/");
     }
   });

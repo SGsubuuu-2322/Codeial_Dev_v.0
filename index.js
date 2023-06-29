@@ -11,6 +11,8 @@ const passport = require("passport");
 const passportLocal = require("./configs/passport-local-strategy");
 
 const MongoStore = require("connect-mongo");
+const flash = require("connect-flash");
+const flashware = require("./configs/customMware");
 
 // Step-2 :- Starting or firingup our express server...
 const app = express();
@@ -66,6 +68,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(passport.setAuthenticatedUser);
+
+app.use(flash());
+app.use(flashware.fware);
 
 // Step-4 :- setting up the express router...
 app.use("/", require("./routes"));
