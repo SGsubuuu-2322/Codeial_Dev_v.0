@@ -18,7 +18,7 @@ module.exports.update = async (req, res) => {
     if (req.user.id == req.params.id) {
       let user = await User.findByIdAndUpdate(req.params.id, req.body);
 
-      console.log("Great!!! your details has been successfully updated...");
+      req.flash("success", "Your profile has been Successfully...");
       return res.redirect("back");
     } else {
       return res.status(401).send("You're unauthorized to do this action...");
@@ -60,6 +60,7 @@ module.exports.signUp = (req, res) => {
 module.exports.create = async (req, res) => {
   try {
     if (req.body.password != req.body.confirm_password) {
+      req.flash("error", "Both the passwords aren't matching...");
       return res.redirect("back");
     }
 
@@ -68,10 +69,13 @@ module.exports.create = async (req, res) => {
     if (!user) {
       await User.create(req.body);
 
-      console.log("The user has been successfully signed_up in app...");
+      req.flash("success", "User created Successfully...");
       return res.redirect("/users/sign-in");
     } else {
-      console.log("This emailID is already exists try with new one...");
+      req.flash(
+        "error",
+        "Sorry this email already exists|Try with other one..."
+      );
       return res.redirect("back");
     }
   } catch (err) {

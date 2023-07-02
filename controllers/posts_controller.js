@@ -7,6 +7,16 @@ module.exports.createPosts = async (req, res) => {
       content: req.body.content,
       user: req.user._id,
     });
+
+    if (req.xhr) {
+      return res.status(200).json({
+        data: {
+          post: post,
+        },
+        message: "Post created successfully...",
+      });
+    }
+    req.flash("success", "Post created Successfully...");
     return res.redirect("back");
   } catch (err) {
     console.log("Error : ", err);
@@ -21,6 +31,7 @@ module.exports.destroyPosts = async (req, res) => {
       // .id is used to convert the object id to string
       post.remove();
       await Comment.deleteMany({ post: req.params.id });
+      req.flash("success", "Post deleted Successfully...");
       return res.redirect("back");
     } else {
       console.log("You're not authorized to do this action...");

@@ -31,7 +31,7 @@ app.use(expressLayouts);
 
 // Extracts styles and scripts from subpages and putting into the layout page...
 app.set("layout extractStyles", true);
-app.set("layout extractSripts", true);
+app.set("layout extractScripts", true);
 
 // Step-5 :- Setting up the view engine in our app...
 app.set("view engine", "ejs");
