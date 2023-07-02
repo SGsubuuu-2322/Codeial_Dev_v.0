@@ -13,6 +13,7 @@
           console.log(data);
           let newPost = newPostDom(data.data.post);
           $("#posts-list-container>ul").prepend(newPost);
+          showNotificaton("Post created successfully");
           deletePost($(" .delete-post-btn", newPost));
         },
         error: function (error) {
@@ -68,6 +69,7 @@
         url: $(deleteLink).prop("href"),
         success: function (data) {
           $(`#post-${data.data.post_id}`).remove();
+          showNotificaton("Post deleted successfully");
         },
         error: function (error) {
           console.log(error.responseText);
@@ -92,6 +94,7 @@
           console.log(data);
           let newComment = displayNewComment(data.data.comment);
           $("#posts-comments-list>ul").prepend(newComment);
+          showNotificaton("Comment created successfully");
           deleteComment($(" .delete-comment-btn", newComment));
         },
         error: function (err) {
@@ -131,6 +134,7 @@
         url: $(deleteLink).prop("href"),
         success: function (data) {
           $(`#comment-${data.data.comment_id}`).remove();
+          showNotificaton("Comment deleted successfully");
         },
         error: function (err) {
           console.log(err.responseText);
@@ -140,4 +144,14 @@
   };
 
   createComment();
+
+  let showNotificaton = function (msg) {
+    new Noty({
+      theme: "relax",
+      text: msg,
+      type: "success",
+      layout: "topRight",
+      timeout: 1500,
+    }).show();
+  };
 }
