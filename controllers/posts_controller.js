@@ -9,6 +9,7 @@ module.exports.createPosts = async (req, res) => {
     });
 
     if (req.xhr) {
+      post = await post.populate("user", "name");
       return res.status(200).json({
         data: {
           post: post,
@@ -29,7 +30,7 @@ module.exports.destroyPosts = async (req, res) => {
     let post = await Post.findById(req.params.id);
     if (post.user == req.user.id) {
       // .id is used to convert the object id to string
-      post.remove();
+      post.deleteOne();
       await Comment.deleteMany({ post: req.params.id });
       if (req.xhr) {
         return res.status(200).json({

@@ -37,17 +37,14 @@ passport.serializeUser(function (user, done) {
 });
 
 // De-serializing the user to authenticate that particular user in your database from the key in your cookies...
-passport.deserializeUser(function (id, done) {
-  User.findById(id, function (err, user) {
-    if (err) {
-      console.log(
-        "There is some issues in session management in authentication"
-      );
-      return done(err);
-    }
+passport.deserializeUser(async function (id, done) {
 
+  try{
+    let user = await User.findById(id);
     return done(null, user);
-  });
+  }catch(err){
+    return done(err);
+  }
 });
 
 // Check if the user is authenticated or not...
