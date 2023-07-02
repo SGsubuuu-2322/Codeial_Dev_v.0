@@ -13,6 +13,7 @@ module.exports.createComments = async (req, res) => {
     post.comments.push(comment);
     post.save();
     if (req.xhr) {
+      comment = await comment.populate("user", "name");
       return res.status(200).json({
         data: {
           comment: comment,
@@ -34,7 +35,7 @@ module.exports.destroyComments = async (req, res) => {
 
     if (comment.user == req.user.id) {
       let postId = comment.Post;
-      comment.remove();
+      comment.deleteOne();
 
       await Post.findByIdAndUpdate(postId, {
         $pull: { comments: req.params.id },
