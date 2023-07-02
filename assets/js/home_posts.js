@@ -16,7 +16,7 @@
           deletePost($(" .delete-post-btn", newPost));
         },
         error: function (error) {
-          console.log(error);
+          console.log(error.responseText);
         },
       });
     });
@@ -70,11 +70,74 @@
           $(`#post-${data.data.post_id}`).remove();
         },
         error: function (error) {
-          console.log(error);
+          console.log(error.responseText);
         },
       });
     });
   };
 
   createPost();
+
+  // Method to submit the form data for new Comment through AJAX and create that comment on DOM...
+  let createComment = function () {
+    let commentForm = $("#new-comment-form");
+    commentForm.submit(function (e) {
+      e.preventDefault();
+
+      $.ajax({
+        type: "post",
+        url: "/comments/create",
+        data: commentForm.serialize(),
+        success: function (data) {
+          console.log(data);
+          let newComment = displayNewComment(data.data.comment);
+          $("#posts-comments-list>ul").prepend(newComment);
+          deleteComment($(" .delete-comment-btn", newComment));
+        },
+        error: function (err) {
+          console.log(err.responseText);
+        },
+      });
+    });
+  };
+
+  // Method to convert that submitted comment into HTML_TEXT...
+  let displayNewComment = function (comment) {
+    return $(`
+    <li id="comment-${comment._id}">
+  <p>
+    <small>
+     
+      <a class="delete-comment-btn" href="/comments/destroy/${comment._id}"
+        >X</a
+      >
+    </small>
+    ${comment.content}
+    <br />
+    <small>@${comment.user.name}</small>
+  </p>
+</li>
+
+    `);
+  };
+
+  // Method to delete the submitted comment on DOM...
+  let deleteComment = function (deleteLink) {
+    $(deleteLink).click(function (e) {
+      e.preventDefault();
+
+      $.ajax({
+        type: "get",
+        url: $(deleteLink).prop("href"),
+        success: function (data) {
+          $(`#comment-${data.data.comment_id}`).remove();
+        },
+        error: function (err) {
+          console.log(err.responseText);
+        },
+      });
+    });
+  };
+
+  createComment();
 }
